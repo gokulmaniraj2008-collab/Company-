@@ -162,35 +162,72 @@ export interface ProductRow {
   updated_at: string;
 }
 
-// Minimal Database interface for supabase-js typing.
-// Extend per-table `Row`/`Insert`/`Update` shapes as the schema evolves.
+// Properly typed Database interface compatible with @supabase/supabase-js generics.
+// Insert omits auto-generated fields (id, created_at, updated_at) and makes
+// nullable fields optional. Update makes all fields optional.
 export interface Database {
   public: {
     Tables: {
-      users: { Row: UserRow; Insert: Partial<UserRow>; Update: Partial<UserRow> };
-      projects: { Row: ProjectRow; Insert: Partial<ProjectRow>; Update: Partial<ProjectRow> };
+      users: {
+        Row: UserRow;
+        Insert: Omit<UserRow, "id" | "created_at" | "updated_at" | "joined_at"> & { id?: string; joined_at?: string; created_at?: string; updated_at?: string };
+        Update: Partial<UserRow>;
+      };
+      projects: {
+        Row: ProjectRow;
+        Insert: Omit<ProjectRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<ProjectRow>;
+      };
       project_milestones: {
         Row: ProjectMilestoneRow;
-        Insert: Partial<ProjectMilestoneRow>;
+        Insert: Omit<ProjectMilestoneRow, "id" | "created_at"> & { id?: string; created_at?: string };
         Update: Partial<ProjectMilestoneRow>;
       };
-      tasks: { Row: TaskRow; Insert: Partial<TaskRow>; Update: Partial<TaskRow> };
+      tasks: {
+        Row: TaskRow;
+        Insert: Omit<TaskRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<TaskRow>;
+      };
       task_comments: {
         Row: TaskCommentRow;
-        Insert: Partial<TaskCommentRow>;
+        Insert: Omit<TaskCommentRow, "id" | "created_at"> & { id?: string; created_at?: string };
         Update: Partial<TaskCommentRow>;
       };
-      documents: { Row: DocumentRow; Insert: Partial<DocumentRow>; Update: Partial<DocumentRow> };
-      sops: { Row: SopRow; Insert: Partial<SopRow>; Update: Partial<SopRow> };
-      reports: { Row: ReportRow; Insert: Partial<ReportRow>; Update: Partial<ReportRow> };
-      meetings: { Row: MeetingRow; Insert: Partial<MeetingRow>; Update: Partial<MeetingRow> };
-      kpis: { Row: KpiRow; Insert: Partial<KpiRow>; Update: Partial<KpiRow> };
+      documents: {
+        Row: DocumentRow;
+        Insert: Omit<DocumentRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<DocumentRow>;
+      };
+      sops: {
+        Row: SopRow;
+        Insert: Omit<SopRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<SopRow>;
+      };
+      reports: {
+        Row: ReportRow;
+        Insert: Omit<ReportRow, "id" | "created_at"> & { id?: string; created_at?: string };
+        Update: Partial<ReportRow>;
+      };
+      meetings: {
+        Row: MeetingRow;
+        Insert: Omit<MeetingRow, "id" | "created_at"> & { id?: string; created_at?: string };
+        Update: Partial<MeetingRow>;
+      };
+      kpis: {
+        Row: KpiRow;
+        Insert: Omit<KpiRow, "id" | "created_at"> & { id?: string; created_at?: string };
+        Update: Partial<KpiRow>;
+      };
       company_laws: {
         Row: CompanyLawRow;
-        Insert: Partial<CompanyLawRow>;
+        Insert: Omit<CompanyLawRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
         Update: Partial<CompanyLawRow>;
       };
-      products: { Row: ProductRow; Insert: Partial<ProductRow>; Update: Partial<ProductRow> };
+      products: {
+        Row: ProductRow;
+        Insert: Omit<ProductRow, "id" | "created_at" | "updated_at"> & { id?: string; created_at?: string; updated_at?: string };
+        Update: Partial<ProductRow>;
+      };
     };
   };
 }
