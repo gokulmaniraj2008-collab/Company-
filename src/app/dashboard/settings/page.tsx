@@ -2,20 +2,17 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ProfileForm } from "@/components/dashboard/ProfileForm";
 import { Users, ShieldCheck, Building2 } from "lucide-react";
-import type { UserRow } from "@/types/database";
 
 export default async function SettingsPage() {
   const supabase = createClient();
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) redirect("/login");
 
-  const { data: profileData } = await supabase
+  const { data: profile } = await supabase
     .from("users")
     .select("*")
     .eq("id", authData.user!.id)
     .single();
-
-  const profile = (profileData as unknown as UserRow) ?? null;
 
   return (
     <div className="max-w-3xl space-y-8">
