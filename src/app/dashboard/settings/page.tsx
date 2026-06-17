@@ -8,10 +8,12 @@ export default async function SettingsPage() {
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) redirect("/login");
 
+  const user = authData.user!;
+
   const { data: profile } = await supabase
     .from("users")
     .select("*")
-    .eq("id", authData.user!.id)
+    .eq("id", user.id)
     .single();
 
   return (
@@ -30,7 +32,7 @@ export default async function SettingsPage() {
           This information is visible to your team.
         </p>
         <div className="mt-6">
-          <ProfileForm profile={profile} email={authData.user!.email ?? ""} />
+          <ProfileForm profile={profile} email={user.email ?? ""} />
         </div>
       </div>
 
