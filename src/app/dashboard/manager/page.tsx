@@ -1,12 +1,12 @@
 import { ModulePlaceholder } from "@/components/dashboard/ModulePlaceholder";
-import { TrendingUp } from "lucide-react";
+import { ClipboardList } from "lucide-react";
 
-export default function GrowthPage() {
+export default function ManagerDashboardPage() {
   return (
     <ModulePlaceholder
-      icon={TrendingUp}
-      title="Growth Dashboard"
-      description="Users, revenue, growth rate, product metrics, and company KPIs — coming in the next build slice."
+      icon={ClipboardList}
+      title="Manager Dashboard"
+      description="Project planning, task assignment, progress tracking, and team coordination — coming in the next build slice."
     />
   );
 }
