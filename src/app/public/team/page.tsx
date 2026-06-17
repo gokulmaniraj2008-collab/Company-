@@ -1,19 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
 import { SectionHeading } from "@/components/SectionHeading";
 import { User } from "lucide-react";
-import type { UserRow } from "@/types/database";
 
 export const revalidate = 60;
 
 export default async function TeamPage() {
   const supabase = createClient();
-  const { data: teamData } = await supabase
+  const { data: team } = await supabase
     .from("users")
     .select("id, full_name, title, department, role, avatar_url")
     .eq("is_active", true)
     .order("role", { ascending: true });
-
-  const team = (teamData as Pick<UserRow, "id" | "full_name" | "title" | "department" | "role" | "avatar_url">[]) ?? [];
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 lg:px-8">
@@ -23,7 +20,7 @@ export default async function TeamPage() {
         description="Founders, managers, and team members working from the same playbook."
       />
 
-      {team.length > 0 ? (
+      {team && team.length > 0 ? (
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((member) => (
             <div key={member.id} className="surface rounded-2xl p-6 text-center">
