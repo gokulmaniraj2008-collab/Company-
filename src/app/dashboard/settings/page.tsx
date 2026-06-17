@@ -15,7 +15,7 @@ export default async function SettingsPage() {
     .eq("id", authData.user!.id)
     .single();
 
-  const profile = (profileData as UserRow) ?? null;
+  const profile = (profileData as unknown as UserRow) ?? null;
 
   return (
     <div className="max-w-3xl space-y-8">
