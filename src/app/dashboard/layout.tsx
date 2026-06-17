@@ -15,10 +15,12 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  const user = authData.user!;
+
   const { data: profile } = await supabase
     .from("users")
     .select("full_name, role, title")
-    .eq("id", authData.user.id)
+    .eq("id", user.id)
     .single();
 
   const role = profile?.role ?? "team_member";
@@ -29,7 +31,7 @@ export default async function DashboardLayout({
       <div className="flex min-h-screen flex-1 flex-col">
         <DashboardTopbar
           fullName={profile?.full_name ?? null}
-          email={authData.user.email ?? ""}
+          email={user.email ?? ""}
           role={role}
           title={profile?.title}
         />
