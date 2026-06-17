@@ -2,17 +2,20 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ProfileForm } from "@/components/dashboard/ProfileForm";
 import { Users, ShieldCheck, Building2 } from "lucide-react";
+import type { UserRow } from "@/types/database";
 
 export default async function SettingsPage() {
   const supabase = createClient();
   const { data: authData } = await supabase.auth.getUser();
   if (!authData.user) redirect("/login");
 
-  const { data: profile } = await supabase
+  const { data: profileData } = await supabase
     .from("users")
     .select("*")
-    .eq("id", authData.user.id)
+    .eq("id", authData.user!.id)
     .single();
+
+  const profile = (profileData as UserRow) ?? null;
 
   return (
     <div className="max-w-3xl space-y-8">
@@ -30,7 +33,7 @@ export default async function SettingsPage() {
           This information is visible to your team.
         </p>
         <div className="mt-6">
-          <ProfileForm profile={profile} email={authData.user.email ?? ""} />
+          <ProfileForm profile={profile} email={authData.user!.email ?? ""} />
         </div>
       </div>
 
