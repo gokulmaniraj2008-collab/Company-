@@ -2,13 +2,6 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { DashboardSidebar } from "@/components/dashboard/DashboardSidebar";
 import { DashboardTopbar } from "@/components/dashboard/DashboardTopbar";
-import type { UserRole } from "@/types/database";
-
-interface ProfileData {
-  full_name: string | null;
-  role: UserRole;
-  title: string | null;
-}
 
 export default async function DashboardLayout({
   children,
@@ -24,14 +17,13 @@ export default async function DashboardLayout({
 
   const user = authData.user!;
 
-  const { data: profileData } = await supabase
+  const { data: profile } = await supabase
     .from("users")
     .select("full_name, role, title")
     .eq("id", user.id)
     .single();
 
-  const profile = profileData as ProfileData | null;
-  const role: UserRole = profile?.role ?? "team_member";
+  const role = profile?.role ?? "team_member";
 
   return (
     <div className="flex min-h-screen bg-ink-950">
