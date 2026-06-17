@@ -9,10 +9,12 @@ export default async function DashboardIndexPage() {
     redirect("/login");
   }
 
+  const user = authData.user!;
+
   const { data: profile } = await supabase
     .from("users")
     .select("role")
-    .eq("id", authData.user!.id)
+    .eq("id", user.id)
     .single();
 
   if (profile?.role === "founder") {
