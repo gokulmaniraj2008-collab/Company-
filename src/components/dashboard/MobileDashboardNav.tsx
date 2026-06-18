@@ -22,8 +22,8 @@ const NAV_ITEMS = [
   { href: "/dashboard/founder", label: "Founder Overview", icon: LayoutDashboard, roles: ["founder"] },
   { href: "/dashboard/manager", label: "Manager Overview", icon: ClipboardList, roles: ["founder", "manager"] },
   { href: "/dashboard/team", label: "My Tasks", icon: ListChecks },
-  { href: "/dashboard/project", label: "Projects", icon: FolderKanban },
-  { href: "/dashboard/task", label: "Task Board", icon: ListChecks },
+  { href: "/dashboard/projects", label: "Projects", icon: FolderKanban },
+  { href: "/dashboard/tasks", label: "Task Board", icon: ListChecks },
   { href: "/dashboard/company-book", label: "Company Book", icon: BookOpen },
   { href: "/dashboard/documents", label: "Documentation Hub", icon: FileText },
   { href: "/dashboard/reports", label: "Reports Center", icon: BarChart3 },
@@ -55,7 +55,7 @@ export function MobileDashboardNav({ role }: { role: UserRole }) {
             className="fixed inset-0 bg-black/60"
             onClick={() => setOpen(false)}
           />
-          <div className="relative flex w-72 flex-col bg-ink-950 border-r border-white/[0.06]">
+          <div className="relative flex w-72 flex-col h-full min-h-screen bg-ink-950 border-r border-white/[0.06]">
             <div className="flex items-center justify-between px-4 py-4 border-b border-white/[0.06]">
               <Logo />
               <button aria-label="Close menu" onClick={() => setOpen(false)} className="text-white">
